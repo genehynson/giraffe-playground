@@ -1,6 +1,6 @@
 # Giraffe Playground
 
-This playground contains examples of the React-based [Giraffe](https://github.com/influxdata/giraffe) virtualization library created by InfluxData.
+This playground contains examples of the React-based [Giraffe](https://github.com/influxdata/giraffe) virtualization library created by [InfluxData](https://www.influxdata.com/).
 
 Giraffe examples included thus far:
 - Band plot
@@ -9,7 +9,7 @@ Giraffe examples included thus far:
 
 **Client:**
 
-React app created with create-react-app that uses Giraffe to render plots. See the `client` directory.
+React app created with [create-react-app](https://github.com/facebook/create-react-app) that uses Giraffe to render plots. See the `client` directory.
 
 **Server**
 
@@ -20,7 +20,7 @@ ExpressJS server that uses both the [InfluxDB API](https://docs.influxdata.com/i
 **Start server**
 
 1. Navigate to `server` directory in terminal
-2. Export your environment variables
+1. Export your environment variables
 
 ```sh
 export INFLUX_URL=http://localhost:9999
@@ -28,14 +28,16 @@ export INFLUX_TOKEN=foo
 export ORG_ID=1234
 export BUCKET_NAME=my-bucket
 ```
-3. `npm run server`
-4. Server starts on port 3001
+1. `npm install`
+1. `npm run server`
+1. Server starts at `localhost:3001`
 
 **Start UI**
 
 1. Navigate to `client` directory in second terminal
-2. `npm start`
-3. Navigate to `localhost:3000`
+1. `npm install`
+1. `npm start`
+1. Navigate to `localhost:3000`
 
 # Examples
 
@@ -55,10 +57,10 @@ Next, create an all access token for your InfluxDB by going to "Data" and clicki
 
 Ok now, in a new terminal, export all the variables such as `INFLUX_URL` (which is the route to your InfluxDB instance), `INFLUX_TOKEN` (which is the all access token we just created), `ORG_ID` (which can be found by clicking your avatar in InfluxDB and selecting "About"), and finally, `BUCKET_NAME`. That's basically it! Now start the server in this terminal using the instructions above.
 
-Finally, start the UI in a 3rd terminal and navigate to `localhost:3000`! You should see the following:
+Finally, start the UI in a 3rd terminal and navigate to `localhost:3000`. You should see the following:
 
 ![cpu_usage](images/cpu_usage.png "CPU Usage Band Chart")
 
 # Credits
 
-This project was inspired by @hoorayimhelping 's [giraffeboi](https://github.com/hoorayimhelping/giraffeboi).
+This project was inspired by @hoorayimhelping's [giraffeboi](https://github.com/hoorayimhelping/giraffeboi).
