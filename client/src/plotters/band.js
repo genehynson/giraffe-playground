@@ -1,28 +1,14 @@
 import React from 'react'
 import {fromFlux, Plot, NINETEEN_EIGHTY_FOUR, timeFormatter} from '@influxdata/giraffe'
 import axios from 'axios'
+import { findStringColumns } from '../helpers'
 
-const REASONABLE_API_REFRESH_RATE = 30000;
+const REASONABLE_API_REFRESH_RATE = 5000;
 
 export class Band extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      layer: {
-        type: 'band',
-        x: '_time',
-        y: '_value',
-        fill: ['result'],
-        colors: NINETEEN_EIGHTY_FOUR,
-        interpolation: "monotoneX",
-        lineWidth: 3,
-        lineOpacity: 0.7,
-        shadeOpacity: 0.3,
-        hoverDimension: "auto",
-        upperColumnName: "max",
-        mainColumnName: "mean",
-        lowerColumnName: "min",
-      },
       table: {},
       lastUpdated: ''
     };
@@ -71,8 +57,43 @@ export class Band extends React.Component {
     window.clearInterval(this.animationFrameId);
   }
 
-
-  renderPlot(config) {
+  renderPlot() {
+    const fill = findStringColumns(this.state.table)
+    const config = {
+      table: this.state.table,
+      layers: [
+        {
+          type: 'band',
+          x: '_time',
+          y: '_value',
+          fill,
+          colors: NINETEEN_EIGHTY_FOUR,
+          interpolation: "monotoneX",
+          lineWidth: 3,
+          lineOpacity: 0.7,
+          shadeOpacity: 0.3,
+          hoverDimension: "auto",
+          upperColumnName: "max",
+          mainColumnName: "mean",
+          lowerColumnName: "min",
+        }
+      ],
+      valueFormatters: {
+        _time: timeFormatter({
+          timeFormat: "UTC",
+          format: "HH:mm",
+        }),
+        _value: val =>
+          typeof val === 'number'
+            ? `${val.toFixed(2)*100}%`
+            : val,
+      },
+      xScale: "linear",
+      yScale: "linear",
+      legendFont: "12px sans-serif",
+      tickFont: "12px sans-serif",
+      showAxes: true,
+    };
     return (
     <div style={this.style}>
       <h3>CPU Usage</h3>
@@ -91,22 +112,6 @@ export class Band extends React.Component {
   }
 
   render() {
-    const config = {
-      table: this.state.table,
-      layers: [this.state.layer],
-      valueFormatters: {
-        _time: timeFormatter({
-          timeFormat: "UTC",
-          format: "HH:mm",
-        }),
-      },
-      xScale: "linear",
-      yScale: "linear",
-      legendFont: "12px sans-serif",
-      tickFont: "12px sans-serif",
-      showAxes: true,
-    };
-    const haveData = Object.keys(this.state.table).length > 0
-    return haveData ? this.renderPlot(config) : this.renderEmpty();
+    return Object.keys(this.state.table).length > 0 ? this.renderPlot() : this.renderEmpty();
   }
 }
