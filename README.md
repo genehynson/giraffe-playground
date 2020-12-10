@@ -43,7 +43,21 @@ export BUCKET_NAME=my-bucket
 
 To show off the Band plot, we'll be plotting our CPU usage! 
 
-TODO: add setup instructions for influxdb, telegraf
+To see what the band chart can do, check out the Giraffe [storybook](https://influxdata.github.io/giraffe/?path=/story/band-chart--static-csv) and here is the storybook's [source](https://github.com/influxdata/giraffe/blob/master/stories/src/band.stories.tsx).
+
+**Setting up InfluxDB**
+
+Ok first things first, create a bucket in your InfluxDB cloud instance! Then click "Add Data" followed by "Configure a Telegraf Agent". Select "System" and note the provided token and telegraf command. Go ahead and exectue those in a terminal.
+
+Next, create an all access token for your InfluxDB by going to "Data" and clicking the "Tokens" tab. Generate an "All Access Token". We'll use this for our app. 
+
+**Setting up this app**
+
+Ok now, in a new terminal, export all the variables such as `INFLUX_URL` (which is the route to your InfluxDB instance), `INFLUX_TOKEN` (which is the all access token we just created), `ORG_ID` (which can be found by clicking your avatar in InfluxDB and selecting "About"), and finally, `BUCKET_NAME`. That's basically it! Now start the server in this terminal using the instructions above.
+
+Finally, start the UI in a 3rd terminal and navigate to `localhost:3000`! You should see the following:
+
+![cpu_usage](images/cpu_usage.png "CPU Usage Band Chart")
 
 # Credits
 
