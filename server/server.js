@@ -73,7 +73,7 @@ app.get('/cpu/client', (req, res) => {
     },
     complete() {
       console.log('\nFinished /cpu/client SUCCESS')
-      res.end(JSON.stringify({ csv: csv }))
+      res.end(JSON.stringify({ csv }))
     },
   })
 })
