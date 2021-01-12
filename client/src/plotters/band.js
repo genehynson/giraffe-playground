@@ -12,9 +12,6 @@ export class Band extends React.Component {
       table: {},
       lastUpdated: ''
     };
-    this.animateRealData = this.animateRealData.bind(this);
-    this.createRealDataTable = this.createRealDataTable.bind(this);
-    this.fetchData = this.fetchData.bind(this);
   }
 
   animationFrameId = 0;
@@ -24,12 +21,8 @@ export class Band extends React.Component {
     margin: "40px",
   };
 
-  async fetchData() {
-    return await axios.get('http://localhost:3001/cpu/client');
-  }
-
-  async createRealDataTable() {
-    const resp = await this.fetchData();
+  getDataAndUpdateTable = async () => {
+    const resp = await axios.get('http://localhost:3001/cpu/client');
 
     try {
       let results = fromFlux(resp.data.csv);
@@ -40,24 +33,20 @@ export class Band extends React.Component {
     }
   }
 
-  animateRealData() {
-    this.createRealDataTable();
-  }
-
   async componentDidMount() {
     try {
-      this.createRealDataTable();
-      this.animationFrameId = window.setInterval(this.animateRealData, REASONABLE_API_REFRESH_RATE);
+      this.getDataAndUpdateTable();
+      this.animationFrameId = window.setInterval(this.getDataAndUpdateTable, REASONABLE_API_REFRESH_RATE);
     } catch (error) {
       console.error(error);
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     window.clearInterval(this.animationFrameId);
   }
 
-  renderPlot() {
+  renderPlot = () => {
     const fill = findStringColumns(this.state.table)
     const config = {
       table: this.state.table,
@@ -103,7 +92,7 @@ export class Band extends React.Component {
     )
   }
 
-  renderEmpty() {
+  renderEmpty = () => {
     return (
       <div style={this.style}>
         <h3>Loading...</h3>
@@ -111,7 +100,7 @@ export class Band extends React.Component {
     )
   }
 
-  render() {
+  render = () => {
     return Object.keys(this.state.table).length > 0 ? this.renderPlot() : this.renderEmpty();
   }
 }
