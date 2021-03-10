@@ -23,7 +23,7 @@ ExpressJS server that uses both the [InfluxDB API](https://docs.influxdata.com/i
 1. Export your environment variables
 
 ```sh
-export INFLUX_URL=http://localhost:9999
+export INFLUX_URL=https://us-west-2-1.aws.cloud2.influxdata.com/
 export INFLUX_TOKEN=foo
 export ORG_ID=1234
 export BUCKET_NAME=my-bucket
